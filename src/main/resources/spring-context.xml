@@ -43,5 +43,8 @@
           p:basePackage="com.bityet.mapper"
           p:sqlSessionFactory-ref="sessionFactory"/>
 
+   <!-- <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"
+          p:filterChainDefinitions-ref=""-->
+
 
 </beans>
