@@ -5,7 +5,7 @@
     <display-name>blog</display-name>
 
     <context-param>
-        <param-name>contextConfigLoacation</param-name>
+        <param-name>contextConfigLocation</param-name>
         <param-value>classpath:spring-context.xml</param-value>
     </context-param>
 

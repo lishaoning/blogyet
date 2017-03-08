@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<%@ include file="resources/include/head.jsp" %>
+<head>
+    <title>blogyet</title>
+</head>
 <body>
 Oh no
 </body>

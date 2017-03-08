@@ -16,15 +16,24 @@
 
     <mvc:annotation-driven>
         <mvc:message-converters>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"
-                  p:objectMapper-ref="objectMapper"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <ref bean="objectMapper"/>
+                </property>
+            </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
     <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
           p:simpleDateFormat="yyyy-MM-dd HH:mm:ss"/>
 
-    <mvc:resources location="resources" mapping="/resources/**" />
+    <mvc:resources location="/resources/" mapping="/resources/**" />
 
 
 </beans>
