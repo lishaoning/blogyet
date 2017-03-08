@@ -1,10 +1,13 @@
 package com.bityet.bean;
 
+import org.apache.ibatis.type.Alias;
+
 import java.util.Date;
 
 /**
  * Created by Administrator on 2017/2/20.
  */
+@Alias("user")
 public class User {
     private Integer id;
     private String username;

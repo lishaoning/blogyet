@@ -25,26 +25,68 @@
           p:location="classpath:config.properties"
           p:fileEncoding="utf-8"/>
 
-    <bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           p:driverClassName="${jdbc.driver}"
           p:url="${jdbc.url}"
           p:username="${jdbc.username}"
           p:password="${jdbc.password}"/>
 
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-          p:dataSource-ref="datasource"
+          p:dataSource-ref="dataSource"
           p:configLocation="classpath:mybatis-config.xml"
           p:mapperLocations="classpath:mapper/*.xml"/>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          p:dataSource-ref="datasource"/>
+          p:dataSource-ref="dataSource"/>
 
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
           p:basePackage="com.bityet.mapper"
           p:sqlSessionFactory-ref="sessionFactory"/>
 
-   <!-- <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean"
-          p:filterChainDefinitions-ref=""-->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="jdbcRealm"/>
+    </bean>
+
+    <!-- Used by the SecurityManager to access security data (users, roles, etc).
+         Many other realm implementations can be used too (PropertiesRealm,
+         LdapRealm, etc. -->
+    <bean id="jdbcRealm" class="com.bityet.realm.SaltAwareJdbcRealm">
+        <property name="name" value="jdbcRealm"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="SHA-256"/>
+                <property name="storedCredentialsHexEncoded" value="false"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <bean id="secureRemoteInvocationExecutor" class="org.apache.shiro.spring.remoting.SecureRemoteInvocationExecutor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+    <!--<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/s/login"/>
+        <property name="successUrl" value="/s/index"/>
+        <property name="unauthorizedUrl" value="/s/unauthorized"/>
+        <property name="filterChainDefinitions">
+            <value>
+
+            </value>
+        </property>
+    </bean>-->
+
+
 
 
 </beans>

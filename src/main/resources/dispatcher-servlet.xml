@@ -24,5 +24,7 @@
     <bean id="objectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean"
           p:simpleDateFormat="yyyy-MM-dd HH:mm:ss"/>
 
+    <mvc:resources location="resources" mapping="/resources/**" />
+
 
 </beans>
