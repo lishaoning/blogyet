@@ -17,22 +17,22 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand navbar-btn" href="/">
-                            <span>
-                                BLOG
+                        <a class="navbar-vertical-middle" href="/">
+                            <span class="navbar-logo-text">
+                                blog
                             </span>
                         </a>
                     </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <%--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right navbar-btn">
                             <li><a href="#">关于</a></li>
                         </ul>
-                       <%-- <form class="navbar-form navbar-right" role="search">
+                        <form class="navbar-form navbar-right" role="search">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="搜索">
                             </div>
-                        </form>--%>
-                    </div>
+                        </form>
+                    </div>--%>
                 </div>
                 <div class="col-md-2"></div>
             </div>
@@ -44,8 +44,12 @@
         <div class="col-md-2"></div>
         <div class="col-md-8">
             <div class="container-fluid">
-                <div class="col-md-8 hidden-xs">
-                    <img class="img-responsive" src="/resources/img/background.jpg">
+                <div class="col-md-8">
+                    <div class="background-text hidden-xs">
+                        <p>public static void main(String [] args) {</p>
+                        <p>&emsp;System.out.println("<b style="color:black">Hello,World</b>");</p>
+                        <p>}</p>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div style="margin-top: 50%">

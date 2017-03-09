@@ -73,6 +73,7 @@ a:hover {
 .navbar-vertical-middle {
   vertical-align: middle;
 }
+
 .navbar-default {
   background-color: #fff;
   border-color: beige;
@@ -80,6 +81,19 @@ a:hover {
 }
 .navbar-brand {
   float: none;
+}
+
+.navbar-logo-text {
+  font-weight: 700;
+  font-size: 3em;
+  color: #286090;
+}
+
+.background-text {
+  margin-top: 25%;
+  font-weight: 700;
+  font-size: 1.5em;
+  color: gray;
 }
 .form-control:focus {
   border-color: #286090;
