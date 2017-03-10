@@ -47,7 +47,7 @@
                 <div class="col-md-8">
                     <div class="background-text hidden-xs">
                         <p>public static void main(String [] args) {</p>
-                        <p>&emsp;System.out.println("<b style="color:black">Hello,World</b>");</p>
+                        <p>&emsp;System.out.println("<b style="color:black;">Hello,World</b>");</p>
                         <p>}</p>
                     </div>
                 </div>
@@ -58,16 +58,14 @@
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>
                                 </div>
-                                <input class="form-control" type="text" name="loginId" id="loginId"
-                                       placeholder="请输入用户名" required/>
+                                <input class="form-control" type="text" name="loginId" id="loginId" placeholder="请输入用户名" required/>
                             </div>
                             <br>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-lock"></span>
                                 </div>
-                                <input class="form-control" type="password" name="password" id="password"
-                                       placeholder="请输入密码" required/>
+                                <input class="form-control" type="password" name="password" id="password" placeholder="请输入密码" required/>
                             </div>
                             <br>
                             <input class="btn btn-primary btn-block" type="button" id="submit" value="登陆"/>
@@ -86,5 +84,8 @@
 </div>
 <script src="/resources/js/jquery-3.1.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
+<script type="javascript">
+
+</script>
 </body>
 </html>
