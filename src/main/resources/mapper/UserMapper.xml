@@ -3,5 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bityet.mapper.UserMapper">
-    <resultMap id="userMap" type="user"></resultMap>
+    <resultMap id="userMap" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="mobile" column="mobile"/>
+        <result property="salt" column="salt"/>
+        <result property="gmtModified" column="gmt_modified"/>
+        <result property="gmtCreate" column="gmt_create"/>
+    </resultMap>
+
+    <select id="getUser" parameterType="string" resultMap="userMap">
+        SELECT username,password,salt from user where username=#{username}
+    </select>
 </mapper>

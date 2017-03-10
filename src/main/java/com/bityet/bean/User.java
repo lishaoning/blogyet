@@ -16,8 +16,8 @@ public class User {
     private String password;
     private String salt;
     private Short status;
-    private Date gmt_modified;
-    private Date gmt_create;
+    private Date gmtModified;
+    private Date gmtCreate;
 
     public Integer getId() {
         return id;
@@ -75,19 +75,19 @@ public class User {
         this.status = status;
     }
 
-    public Date getGmt_modified() {
-        return gmt_modified;
+    public Date getGmtModified() {
+        return gmtModified;
     }
 
-    public void setGmt_modified(Date gmt_modified) {
-        this.gmt_modified = gmt_modified;
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 
-    public Date getGmt_create() {
-        return gmt_create;
+    public Date getGmtCreate() {
+        return gmtCreate;
     }
 
-    public void setGmt_create(Date gmt_create) {
-        this.gmt_create = gmt_create;
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 }
