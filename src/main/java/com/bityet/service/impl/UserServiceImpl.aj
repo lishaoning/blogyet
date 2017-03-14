@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  * Created by Sean on 2017/3/10.
  */
 @Service
-public aspect UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserMapper userMapper;
