@@ -30,7 +30,7 @@ public class LoginController {
 
         try {
             SecurityUtils.getSubject().login(token);
-
+            String
         }catch (AuthenticationException ae){
 
         }
