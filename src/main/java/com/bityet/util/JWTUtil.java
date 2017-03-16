@@ -14,7 +14,7 @@ public final class JWTUtil {
     private static RSAPublicKey publicKey=null;
     private static RSAPrivateKey privateKey=null;
 
-    private static Algorithm algorithm=Algorithm.RSA256(publicKey,privateKey);
+    private static Algorithm algorithm=Algorithm.RS
 
     public static String generateJWT(){
         return JWT.create().withIssuer("").sign(algorithm);

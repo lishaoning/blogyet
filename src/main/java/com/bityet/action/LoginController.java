@@ -1,6 +1,7 @@
 package com.bityet.action;
 
 import com.bityet.bean.User;
+import com.bityet.util.JWTUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -27,10 +28,9 @@ public class LoginController {
     @RequestMapping("/doLogin")
     @ResponseBody
     public Map<String,Object> doLogin(UsernamePasswordToken token){
-
         try {
             SecurityUtils.getSubject().login(token);
-            String
+            String jwt= JWTUtil.generateJWT();
         }catch (AuthenticationException ae){
 
         }
