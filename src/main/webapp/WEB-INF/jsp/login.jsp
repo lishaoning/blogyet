@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/resources/include/include.jsp" %>
 <!DOCTYPE html>
@@ -53,27 +54,27 @@
                 </div>
                 <div class="col-md-4">
                     <div style="margin-top: 50%">
-                        <form id="form_login" method="post">
+                        <form:form modelAttribute="usernamePasswordToken" name="loginForm">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>
                                 </div>
-                                <input class="form-control" type="text" name="loginId" id="loginId" placeholder="请输入用户名" required/>
+                                <form:input path="username" cssClass="form-control" />
                             </div>
                             <br>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-lock"></span>
                                 </div>
-                                <input class="form-control" type="password" name="password" id="password" placeholder="请输入密码" required/>
+                                <form:input path="password" cssClass="form-control"/>
                             </div>
                             <br>
-                            <input class="btn btn-primary btn-block" type="button" id="submit" value="登陆"/>
+                            <input class="btn btn-primary btn-block" type="submit" value="登陆"/>
                             <br>
-                            <input type="checkbox" name="autoLogin"/>
+                            <form:checkbox path="rememberMe"/>
                             <span class="r-checkbox-text">记住我</span>
                             <a class="btn btn-primary btn-xs pull-right" href="./register">注册</a>
-                        </form>
+                        </form:form>
                     </div>
                 </div>
                 </div>
