@@ -41,7 +41,7 @@
 
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer"
           p:basePackage="com.bityet.mapper"
-          p:sqlSessionFactory-ref="sessionFactory"/>
+          p:sqlSessionFactoryBeanName="sessionFactory"/>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="jdbcRealm"/>
@@ -74,7 +74,7 @@
         <property name="securityManager" ref="securityManager"/>
     </bean>
 
-    <!--<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/s/login"/>
         <property name="successUrl" value="/s/index"/>
@@ -84,7 +84,7 @@
 
             </value>
         </property>
-    </bean>-->
+    </bean>
 
 
 

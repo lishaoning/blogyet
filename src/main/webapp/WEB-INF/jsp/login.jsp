@@ -1,4 +1,3 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/resources/include/include.jsp" %>
 <!DOCTYPE html>
@@ -54,7 +53,7 @@
                 </div>
                 <div class="col-md-4">
                     <div style="margin-top: 50%">
-                        <form:form modelAttribute="usernamePasswordToken" name="loginForm">
+                        <form:form modelAttribute="loginCommand" name="loginForm">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>

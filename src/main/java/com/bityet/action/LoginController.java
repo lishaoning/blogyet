@@ -1,5 +1,6 @@
 package com.bityet.action;
 
+import com.bityet.bean.LoginCommand;
 import com.bityet.bean.User;
 import com.bityet.util.JWTUtil;
 import org.apache.shiro.SecurityUtils;
@@ -23,13 +24,14 @@ import java.util.Map;
 public class LoginController {
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
-    public String toLogin(Model model,@ModelAttribute UsernamePasswordToken token){
+    public String toLogin(Model model,@ModelAttribute LoginCommand command){
         return "login";
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String doLogin(Model model, @ModelAttribute UsernamePasswordToken token, BindingResult errors){
+    public String doLogin(Model model, @ModelAttribute LoginCommand command, BindingResult errors){
         try {
+            UsernamePasswordToken token=new UsernamePasswordToken(command.getUsername(),command.getPassword(),command.isRememberMe());
             SecurityUtils.getSubject().login(token);
             String jwt= JWTUtil.generateJWT();
         }catch (AuthenticationException ae){
