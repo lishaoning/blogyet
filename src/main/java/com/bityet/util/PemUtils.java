@@ -65,4 +65,9 @@ public class PemUtils {
         return PemUtils.getPrivateKey(bytes, algorithm);
     }
 
+    public static void main(String [] args) throws IOException {
+        PublicKey key=new PemUtils().readPublicKeyFromFile("rsa-public.pem","RSA");
+        System.out.println(key.toString());
+    }
+
 }
