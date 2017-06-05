@@ -14,8 +14,10 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
+
     <context:annotation-config/>
-    <context:component-scan base-package="com.bityet.service"/>
+
+    <context:component-scan base-package="com.bityet.service" />
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 

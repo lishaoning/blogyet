@@ -2,7 +2,10 @@
 <%@ include file="/resources/include/include.jsp" %>
 <!DOCTYPE html>
 <html>
-<%@ include file="/resources/include/head.html" %>
+<head>
+    <%@ include file="/resources/include/head.html" %>
+    <% String rc=request.getContextPath(); %>
+</head>
 <body>
 <header>
     <nav class="navbar navbar-default" role="navigation">
@@ -46,13 +49,11 @@
             <div class="container-fluid">
                 <div class="col-md-8">
                     <div class="background-text hidden-xs">
-                        <p>public static void main(String [] args) {</p>
-                        <p>&emsp;System.out.println("<b style="color:black;">Hello,World</b>");</p>
-                        <p>}</p>
+                        <p><b style="color:black;">Hello,World</b></p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div style="margin-top: 50%">
+                    <div style="margin-top: 60%">
                         <form:form modelAttribute="loginCommand" name="loginForm">
                             <div class="input-group">
                                 <div class="input-group-addon">
@@ -65,7 +66,7 @@
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-lock"></span>
                                 </div>
-                                <form:input path="password" cssClass="form-control"/>
+                                <form:input type="password" path="password" cssClass="form-control"/>
                             </div>
                             <br>
                             <input class="btn btn-primary btn-block" type="submit" value="登陆"/>
@@ -84,8 +85,13 @@
 </div>
 <script src="/resources/js/jquery-3.1.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
+<script src="/resources/js/cryptico.min.js"></script>
 <script type="javascript">
+    function encryptPasswd(){
+        $.getJSON(<%=rc%>+'',function (key) {
 
+        })
+    }
 </script>
 </body>
 </html>

@@ -66,7 +66,7 @@ public class PemUtils {
     }
 
     public static void main(String [] args) throws IOException {
-        PublicKey key=new PemUtils().readPublicKeyFromFile("rsa-public.pem","RSA");
+        PublicKey key=new PemUtils().readPublicKeyFromFile("src/main/resources/rsa-public.pem","RSA");
         System.out.println(key.toString());
     }
 
