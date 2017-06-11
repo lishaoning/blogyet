@@ -10,6 +10,4 @@ import java.security.PublicKey;
 public interface UserService {
 
     public User getUser(String username);
-
-    public PublicKey getPublicKey() throws Exception;
 }

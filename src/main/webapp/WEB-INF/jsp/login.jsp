@@ -2,10 +2,7 @@
 <%@ include file="/resources/include/include.jsp" %>
 <!DOCTYPE html>
 <html>
-<head>
-    <%@ include file="/resources/include/head.html" %>
-    <% String rc=request.getContextPath(); %>
-</head>
+<%@ include file="/resources/include/head.html" %>
 <body>
 <header>
     <nav class="navbar navbar-default" role="navigation">
@@ -54,7 +51,7 @@
                 </div>
                 <div class="col-md-4">
                     <div style="margin-top: 60%">
-                        <form:form modelAttribute="loginCommand" name="loginForm">
+                        <form:form modelAttribute="loginCommand" name="loginForm" id="loginForm">
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>
@@ -86,10 +83,17 @@
 <script src="/resources/js/jquery-3.1.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/cryptico.min.js"></script>
-<script type="javascript">
+<script>
+    $(function(){
+        $("#loginForm").submit(function (e) {
+            encryptPasswd();
+            e.preventDefault();
+        });
+    });
     function encryptPasswd(){
-        $.getJSON(<%=rc%>+'',function (key) {
-
+        console.log(11111111111)
+        $.getJSON('/getPublicKey',function (key) {
+            console.log(key);
         })
     }
 </script>

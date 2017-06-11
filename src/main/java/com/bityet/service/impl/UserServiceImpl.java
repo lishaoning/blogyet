@@ -22,7 +22,4 @@ public class UserServiceImpl implements UserService{
         return this.userMapper.getUser(username);
     }
 
-    public PublicKey getPublicKey() throws Exception{
-       return PemUtils.readPublicKeyFromFile("/resources/rsa-public.pem","RSA");
-    }
 }
