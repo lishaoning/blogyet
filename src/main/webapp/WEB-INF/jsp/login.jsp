@@ -63,10 +63,10 @@
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-lock"></span>
                                 </div>
-                                <form:input type="password" path="password" cssClass="form-control"/>
+                                <form:input type="password" path="password" id="password" cssClass="form-control"/>
                             </div>
                             <br>
-                            <input class="btn btn-primary btn-block" type="submit" value="登陆"/>
+                            <input class="btn btn-primary btn-block" type="button" value="登陆" onclick="encryptPasswd()"/>
                             <br>
                             <form:checkbox path="rememberMe"/>
                             <span class="r-checkbox-text">记住我</span>
@@ -85,15 +85,11 @@
 <script src="/resources/js/cryptico.min.js"></script>
 <script>
     $(function(){
-        $("#loginForm").submit(function (e) {
-            encryptPasswd();
-            e.preventDefault();
-        });
     });
     function encryptPasswd(){
-        console.log(11111111111)
         $.getJSON('/getPublicKey',function (key) {
-            console.log(key);
+            $("#password").val(cryptico.encrypt($("#password").val(),key).cipher);
+            $("#loginForm").submit();
         })
     }
 </script>
