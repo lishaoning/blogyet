@@ -58,7 +58,7 @@ public class LoginController {
     public String getPublicKey() {
         try {
             RSAPublicKey key = (RSAPublicKey) PemUtils.readPublicKeyFromFile("E:/bityet/blogyet/src/main/resources/rsa-public.pem","RSA");
-            return new BASE64Encoder().encode(key.getEncoded());
+            return new BASE64Encoder().encode(key.getModulus().toByteArray())+"|"+key.getPublicExponent().toString(16);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

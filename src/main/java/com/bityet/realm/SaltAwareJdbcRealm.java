@@ -39,17 +39,67 @@ public class SaltAwareJdbcRealm extends JdbcRealm {
             privateKey = (RSAPrivateKey) PemUtils.readPrivateKeyFromFile("E:/bityet/blogyet/src/main/resources/rsa-private.pem","RSA");
             Cipher ci = Cipher.getInstance("RSA");
             ci.init(Cipher.DECRYPT_MODE,privateKey);
-            byte [] bytes =ci.doFinal(DatatypeConverter.parseHexBinary(new String(upToken.getPassword())));
-            System.out.println(new String(bytes));
-            String password=DigestUtils.sha256Hex(new String(bytes));
-            if (!password.equals("111qqq")) {
-                throw new IncorrectCredentialsException();
+            int key_len = privateKey.getModulus().bitLength() / 16;
+            byte[] bytes = DatatypeConverter.parseBase64Binary(new String(upToken.getPassword()));
+            byte[] bcd = ASCII_To_BCD(bytes, bytes.length);
+            System.err.println(bcd.length);
+            //如果密文长度大于模长则要分组解密
+            String ming = "";
+            byte[][] arrays = splitArray(bcd, key_len);
+            for(byte[] arr : arrays) {
+                ming += new String(ci.doFinal(arr));
             }
+            System.out.println(ming);
         }catch (IOException ie){
             ie.printStackTrace();
         }catch (Exception e) {
             e.printStackTrace();
         }
         return new SimpleAuthenticationInfo("lisn","111qqq","");
+    }
+
+    public byte[] ASCII_To_BCD(byte[] ascii, int asc_len) {
+        byte[] bcd = new byte[asc_len / 2];
+        int j = 0;
+        for (int i = 0; i < (asc_len + 1) / 2; i++) {
+            bcd[i] = asc_to_bcd(ascii[j++]);
+            bcd[i] = (byte) (((j >= asc_len) ? 0x00 : asc_to_bcd(ascii[j++])) + (bcd[i] << 4));
+        }
+        return bcd;
+    }
+
+    public byte asc_to_bcd(byte asc) {
+        byte bcd;
+
+        if ((asc >= '0') && (asc <= '9'))
+            bcd = (byte) (asc - '0');
+        else if ((asc >= 'A') && (asc <= 'F'))
+            bcd = (byte) (asc - 'A' + 10);
+        else if ((asc >= 'a') && (asc <= 'f'))
+            bcd = (byte) (asc - 'a' + 10);
+        else
+            bcd = (byte) (asc - 48);
+        return bcd;
+    }
+
+    public byte[][] splitArray(byte[] data,int len){
+        int x = data.length / len;
+        int y = data.length % len;
+        int z = 0;
+        if(y!=0){
+            z = 1;
+        }
+        byte[][] arrays = new byte[x+z][];
+        byte[] arr;
+        for(int i=0; i<x+z; i++){
+            arr = new byte[len];
+            if(i==x+z-1 && y!=0){
+                System.arraycopy(data, i*len, arr, 0, y);
+            }else{
+                System.arraycopy(data, i*len, arr, 0, len);
+            }
+            arrays[i] = arr;
+        }
+        return arrays;
     }
 }

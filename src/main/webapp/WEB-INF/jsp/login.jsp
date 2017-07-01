@@ -82,14 +82,16 @@
 </div>
 <script src="/resources/js/jquery-3.1.1.min.js"></script>
 <script src="/resources/js/bootstrap.min.js"></script>
-<script src="/resources/js/cryptico.min.js"></script>
+<script src="/resources/js/cryptico.js"></script>
 <script>
     $(function(){
     });
     function encryptPasswd(){
-        $.getJSON('/getPublicKey',function (key) {
-            $("#password").val(cryptico.encrypt($("#password").val(),key).cipher);
-            $("#loginForm").submit();
+        $.getJSON('/getPublicKey',function (key){
+            console.log(key);
+            console.log(cryptico.encrypt($("#password").val(),key));
+            $("#password").val(cryptico.encrypt($("#password").val(),key));
+
         })
     }
 </script>
