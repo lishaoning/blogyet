@@ -89,9 +89,9 @@
     function encryptPasswd(){
         $.getJSON('/getPublicKey',function (key){
             console.log(key);
-            console.log(cryptico.encrypt($("#password").val(),key));
-            $("#password").val(cryptico.encrypt($("#password").val(),key));
-
+            console.log(cryptico.encrypt($("#password").val(),key).cipher);
+            $("#password").val(cryptico.encrypt($("#password").val(),key).cipher);
+            $("#loginForm").submit();
         })
     }
 </script>

@@ -1,15 +1,14 @@
 package com.bityet.action;
 
 import com.bityet.bean.LoginCommand;
-import com.bityet.bean.User;
 import com.bityet.service.UserService;
+import com.bityet.util.EncryptUtil;
 import com.bityet.util.JWTUtil;
-import com.bityet.util.PemUtils;
-import org.apache.commons.codec.binary.Hex;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +17,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import java.math.BigInteger;
-import java.security.PublicKey;
+import javax.servlet.http.HttpSession;
+import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Map;
 
@@ -31,18 +31,24 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
+    private final Logger logger = LogManager.getLogger(LoginController.class);
+
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String toLogin(Model model, @ModelAttribute LoginCommand command) {
+        logger.info("记录日志");
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String doLogin(Model model, @ModelAttribute LoginCommand command, BindingResult errors) {
+    public String doLogin(HttpSession session,Model model, @ModelAttribute LoginCommand command, BindingResult errors) {
         try {
-            UsernamePasswordToken token = new UsernamePasswordToken(command.getUsername(), command.getPassword(), command.isRememberMe());
+            String encryptedPasswd=command.getPassword();
+            PrivateKey key= (PrivateKey) session.getAttribute("private");
+            String password=EncryptUtil.decryptByPrivateKey(new BASE64Decoder().decodeBuffer(encryptedPasswd),key);
+            UsernamePasswordToken token = new UsernamePasswordToken(command.getUsername(), password, command.isRememberMe());
             SecurityUtils.getSubject().login(token);
             String jwt = JWTUtil.generateJWT();
         } catch (AuthenticationException ae) {
@@ -55,9 +61,11 @@ public class LoginController {
 
     @RequestMapping("/getPublicKey")
     @ResponseBody
-    public String getPublicKey() {
+    public String getPublicKey(HttpSession session) {
         try {
-            RSAPublicKey key = (RSAPublicKey) PemUtils.readPublicKeyFromFile("E:/bityet/blogyet/src/main/resources/rsa-public.pem","RSA");
+            Map<String,Object> keypair= EncryptUtil.initKeyPair();
+            RSAPublicKey key = (RSAPublicKey) keypair.get("public");
+            session.setAttribute("private",keypair.get("private"));
             return new BASE64Encoder().encode(key.getModulus().toByteArray())+"|"+key.getPublicExponent().toString(16);
         } catch (Exception e) {
             e.printStackTrace();

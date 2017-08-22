@@ -1,16 +1,19 @@
 package com.bityet.util;
 
+import org.apache.commons.codec.binary.Base64;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
-import java.security.Key;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.io.ByteArrayOutputStream;
+import java.security.*;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/2/14.
@@ -76,5 +79,32 @@ public class EncryptUtil {
             hexstr[k++] = hexDigits[byte0 & 0xf];
         }
         return new String(hexstr);
+    }
+
+    public static Map<String,Object> initKeyPair() throws Exception{
+        KeyPairGenerator kgen= KeyPairGenerator.getInstance("RSA");
+        kgen.initialize(1024);
+        KeyPair keyPair= kgen.generateKeyPair();
+        RSAPublicKey pkey=(RSAPublicKey) keyPair.getPublic();
+        RSAPrivateKey ikey=(RSAPrivateKey) keyPair.getPrivate();
+        Map<String,Object> map=new HashMap<String,Object>();
+        map.put("private",ikey);
+        map.put("public",pkey);
+        return map;
+    }
+
+    public static String decryptByPrivateKey(byte[] encrypted,PrivateKey key) throws Exception{
+        Cipher cipher=Cipher.getInstance(key.getAlgorithm());
+        cipher.init(Cipher.DECRYPT_MODE,key);
+        return new String(cipher.doFinal(encrypted));
+    }
+
+    public static void main(String [] args){
+        try {
+            Map<String,Object> map=initKeyPair();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
