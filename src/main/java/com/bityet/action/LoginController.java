@@ -4,11 +4,11 @@ import com.bityet.bean.LoginCommand;
 import com.bityet.service.UserService;
 import com.bityet.util.EncryptUtil;
 import com.bityet.util.JWTUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +31,13 @@ import java.util.Map;
 @Controller
 public class LoginController {
 
-    private final Logger logger = LogManager.getLogger(LoginController.class);
+    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String toLogin(Model model, @ModelAttribute LoginCommand command) {
-        logger.info("记录日志");
         return "login";
     }
 
@@ -54,7 +53,7 @@ public class LoginController {
         } catch (AuthenticationException ae) {
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(),e);
         }
         return "login";
     }

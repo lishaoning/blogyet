@@ -45,13 +45,6 @@
           p:basePackage="com.bityet.mapper"
           p:sqlSessionFactoryBeanName="sessionFactory"/>
 
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="jdbcRealm"/>
-    </bean>
-
-    <!-- Used by the SecurityManager to access security data (users, roles, etc).
-         Many other realm implementations can be used too (PropertiesRealm,
-         LdapRealm, etc. -->
     <bean id="jdbcRealm" class="com.bityet.realm.SaltAwareJdbcRealm">
         <property name="name" value="jdbcRealm"/>
         <property name="dataSource" ref="dataSource"/>
@@ -61,6 +54,10 @@
                 <property name="storedCredentialsHexEncoded" value="false"/>
             </bean>
         </property>
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="jdbcRealm"/>
     </bean>
 
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
