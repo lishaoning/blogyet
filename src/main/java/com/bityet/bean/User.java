@@ -7,9 +7,8 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/2/20.
  */
-@Alias("user")
 public class User {
-    private Integer id;
+    private Long id;
     private String username;
     private String email;
     private String mobile;
@@ -19,11 +18,11 @@ public class User {
     private Date gmtModified;
     private Date gmtCreate;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -89,5 +88,9 @@ public class User {
 
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
+    }
+
+    public boolean isLocked(){
+        return this.status !=1;
     }
 }

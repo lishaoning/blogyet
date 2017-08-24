@@ -1,6 +1,7 @@
 package com.bityet.util;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -20,9 +21,9 @@ import java.util.Map;
  */
 public class EncryptUtil {
 
-    private static Key key;
-    private static String KEY_STR = "jiji12dau";
-    private static char[] hexDigits = {'a', '^', 'h', '$', 'K', '9', '6', '+', '8', 'a', 'N', '%', 'o', '0', 'd', 'F'};
+    private static final Key key;
+    private static final String KEY_STR = "jiji12dau";
+    private static final char[] hexDigits = {'a', '^', 'h', '$', 'K', '9', '6', '+', '8', 'a', 'N', '%', 'o', '0', 'd', 'F'};
 
     static {
         try {
@@ -65,7 +66,6 @@ public class EncryptUtil {
     }
 
     public static String digestString(String str, String algorithm) throws NoSuchAlgorithmException {
-
         byte[] btInput = str.getBytes();
         MessageDigest mdInst = MessageDigest.getInstance(algorithm);
         mdInst.update(btInput);
@@ -100,11 +100,11 @@ public class EncryptUtil {
     }
 
     public static void main(String [] args){
-        try {
+       /* try {
             Map<String,Object> map=initKeyPair();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 }

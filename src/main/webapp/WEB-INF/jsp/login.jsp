@@ -52,6 +52,7 @@
                 <div class="col-md-4">
                     <div style="margin-top: 60%">
                         <form:form modelAttribute="loginCommand" name="loginForm" id="loginForm">
+                            <form:errors path="*" element="div" cssClass="errors"/>
                             <div class="input-group">
                                 <div class="input-group-addon">
                                     <span class="glyphicon glyphicon-user"></span>
@@ -84,12 +85,8 @@
 <script src="/resources/js/bootstrap.min.js"></script>
 <script src="/resources/js/cryptico.js"></script>
 <script>
-    $(function(){
-    });
     function encryptPasswd(){
         $.getJSON('/getPublicKey',function (key){
-            console.log(key);
-            console.log(cryptico.encrypt($("#password").val(),key).cipher);
             $("#password").val(cryptico.encrypt($("#password").val(),key).cipher);
             $("#loginForm").submit();
         })

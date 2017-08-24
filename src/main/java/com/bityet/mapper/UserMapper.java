@@ -7,5 +7,5 @@ import com.bityet.bean.User;
  */
 public interface UserMapper {
 
-    public User getUser(String userName);
+    User getUser(String userName);
 }

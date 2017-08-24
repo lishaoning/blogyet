@@ -5,8 +5,7 @@ import com.bityet.service.UserService;
 import com.bityet.util.EncryptUtil;
 import com.bityet.util.JWTUtil;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +49,13 @@ public class LoginController {
             UsernamePasswordToken token = new UsernamePasswordToken(command.getUsername(), password, command.isRememberMe());
             SecurityUtils.getSubject().login(token);
             String jwt = JWTUtil.generateJWT();
-        } catch (AuthenticationException ae) {
-
+        } catch (UnknownAccountException | IncorrectCredentialsException e) {
+            errors.reject("error.login.generic","用户名或密码错误");
+            return "login";
         } catch (Exception e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         }
-        return "login";
+        return "redirect:/index";
     }
 
     @RequestMapping("/getPublicKey")
@@ -70,5 +70,10 @@ public class LoginController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
     }
 }
