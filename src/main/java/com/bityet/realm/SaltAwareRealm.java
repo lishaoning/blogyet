@@ -10,6 +10,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.crypto.Cipher;
@@ -32,20 +33,14 @@ public class SaltAwareRealm extends AuthorizingRealm {
         User user = this.userMapper.getUser(upToken.getUsername());
         if (user == null) {
             throw new UnknownAccountException();
-        }else if(!encryptPassword(new String(upToken.getPassword()),user.getSalt()).equals(user.getPassword())){
-            throw new IncorrectCredentialsException();
         }else if(user.isLocked()){
             throw new LockedAccountException();
         }
-        return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(),"");
+        return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(), ByteSource.Util.bytes(user.getSalt()),getName());
     }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         return null;
-    }
-
-    private String encryptPassword(final String password,final String salt){
-        return DigestUtils.md5Hex(DigestUtils.sha512Hex(password)+salt);
     }
 }

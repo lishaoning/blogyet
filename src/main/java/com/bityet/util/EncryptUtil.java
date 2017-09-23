@@ -65,7 +65,7 @@ public class EncryptUtil {
         }
     }
 
-    public static String digestString(String str, String algorithm) throws NoSuchAlgorithmException {
+    /*public static String digestString(String str, String algorithm) throws NoSuchAlgorithmException {
         byte[] btInput = str.getBytes();
         MessageDigest mdInst = MessageDigest.getInstance(algorithm);
         mdInst.update(btInput);
@@ -79,7 +79,7 @@ public class EncryptUtil {
             hexstr[k++] = hexDigits[byte0 & 0xf];
         }
         return new String(hexstr);
-    }
+    }*/
 
     public static Map<String,Object> initKeyPair() throws Exception{
         KeyPairGenerator kgen= KeyPairGenerator.getInstance("RSA");

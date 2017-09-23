@@ -13,6 +13,6 @@
     </resultMap>
 
     <select id="getUser" parameterType="string" resultMap="userMap">
-        SELECT username,password,salt from tbl_user where username=#{username}
+        SELECT username,password,email,mobile,salt,status from tbl_user where username=#{username}
     </select>
 </mapper>
