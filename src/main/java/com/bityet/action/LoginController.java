@@ -3,7 +3,7 @@ package com.bityet.action;
 import com.bityet.bean.LoginCommand;
 import com.bityet.service.UserService;
 import com.bityet.util.EncryptUtil;
-import com.bityet.util.JWTUtil;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.slf4j.Logger;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpSession;
 import java.security.PrivateKey;
@@ -25,9 +23,9 @@ import java.util.Map;
  * Created by Administrator on 2017/2/20.
  */
 @Controller
-public class UserLoginController {
+public class LoginController {
 
-    private final Logger logger = LoggerFactory.getLogger(UserLoginController.class);
+    private final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private UserService userService;
@@ -42,7 +40,7 @@ public class UserLoginController {
         try {
             String encryptedPasswd=command.getPassword();
             PrivateKey key= (PrivateKey) session.getAttribute("private");
-            String password=EncryptUtil.decryptByPrivateKey(new BASE64Decoder().decodeBuffer(encryptedPasswd),key);
+            String password=EncryptUtil.decryptByPrivateKey(Base64.decodeBase64(encryptedPasswd),key);
             UsernamePasswordToken token = new UsernamePasswordToken(command.getUsername(), password, command.isRememberMe());
             SecurityUtils.getSubject().login(token);
 //            String jwt = JWTUtil.generateJWT();
@@ -56,14 +54,14 @@ public class UserLoginController {
         return "redirect:/index";
     }
 
-    @RequestMapping("/getPublicKey")
+    @GetMapping("/getPublicKey")
     @ResponseBody
     public String getPublicKey(HttpSession session) {
         try {
             Map<String,Object> keypair= EncryptUtil.initKeyPair();
             RSAPublicKey key = (RSAPublicKey) keypair.get("public");
             session.setAttribute("private",keypair.get("private"));
-            return new BASE64Encoder().encode(key.getModulus().toByteArray())+"|"+key.getPublicExponent().toString(16);
+            return Base64.encodeBase64String(key.getModulus().toByteArray())+"|"+key.getPublicExponent().toString(16);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
