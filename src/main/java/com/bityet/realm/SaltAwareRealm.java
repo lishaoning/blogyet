@@ -33,7 +33,8 @@ public class SaltAwareRealm extends AuthorizingRealm {
         User user = this.userMapper.getUser(upToken.getUsername());
         if (user == null) {
             throw new UnknownAccountException();
-        }else if(user.isLocked()){
+        }
+        if(user.isLocked()){
             throw new LockedAccountException();
         }
         return new SimpleAuthenticationInfo(user.getUsername(),user.getPassword(), ByteSource.Util.bytes(user.getSalt()),getName());

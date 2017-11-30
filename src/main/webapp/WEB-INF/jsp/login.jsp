@@ -86,7 +86,7 @@
 <script src="/resources/js/cryptico.js"></script>
 <script>
     function encryptPasswd(){
-        $.getJSON('/getPublicKey',function (key){
+        $.getJSON('/login/getPublicKey',function (key){
             $("#password").val(cryptico.encrypt($("#password").val(),key).cipher);
             $("#loginForm").submit();
         })

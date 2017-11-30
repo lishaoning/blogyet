@@ -19,4 +19,8 @@ public class CustomCredentialsMatcher extends SimpleCredentialsMatcher {
         String password = DigestUtils.md5Hex(DigestUtils.sha512Hex(new String(upToken.getPassword()))+salt);
         return equals(info.getCredentials(),password);
     }
+
+    public static void main(String [] args){
+        System.out.println(DigestUtils.md5Hex("0123456789lee8864"));
+    }
 }

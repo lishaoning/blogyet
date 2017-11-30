@@ -6,6 +6,8 @@ import com.bityet.util.EncryptUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.util.Map;
  * Created by Administrator on 2017/2/20.
  */
 @Controller
+@RequestMapping("login")
 public class LoginController {
 
     private final Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -30,13 +33,13 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public String toLogin(Model model, @ModelAttribute LoginCommand command) {
+    @GetMapping
+    public String toLogin(@ModelAttribute LoginCommand command) {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String doLogin(HttpSession session,Model model, @ModelAttribute LoginCommand command, BindingResult errors) {
+    @PostMapping
+    public String doLogin(HttpSession session,@ModelAttribute LoginCommand command, BindingResult errors) {
         try {
             String encryptedPasswd=command.getPassword();
             PrivateKey key= (PrivateKey) session.getAttribute("private");
@@ -51,7 +54,7 @@ public class LoginController {
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
-        return "redirect:/index";
+        return "/index";
     }
 
     @GetMapping("/getPublicKey")

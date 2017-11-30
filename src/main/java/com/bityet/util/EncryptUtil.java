@@ -22,28 +22,26 @@ public class EncryptUtil {
 
     static {
         try {
-            KeyGenerator generator = KeyGenerator.getInstance("AES");
-            generator.init(new SecureRandom(KEY_STR.getBytes()));
-            key = generator.generateKey();
-            generator = null;
+            KeyGenerator kg = KeyGenerator.getInstance(KEY_ALGORITHM);
+            SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG","SUN");
+            secureRandom.setSeed(KEY_STR.getBytes());
+            kg.init(128, secureRandom);
+            key = kg.generateKey();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    //AES
-    public static String getEncryptString(String str) throws Exception{
+    public static String getEncryptString(String data) throws Exception{
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE,key);
-        return Base64.encodeBase64String(cipher.doFinal(str.getBytes()));
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return Base64.encodeBase64String(cipher.doFinal(data.getBytes()));
     }
 
-
-    //AES
-    public static String getDecryptString(String str) throws Exception {
+    public static String getDecryptString(String data) throws Exception{
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, key);
-        return new String(cipher.doFinal(Base64.decodeBase64(str)));
+        return new String(cipher.doFinal(Base64.decodeBase64(data)));
     }
 
     public static Map<String,Object> initKeyPair() throws Exception{

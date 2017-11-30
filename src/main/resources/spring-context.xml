@@ -45,10 +45,11 @@
           p:basePackage="com.bityet.mapper"
           p:sqlSessionFactoryBeanName="sessionFactory"/>
 
-    <bean id="jdbcRealm" class="com.bityet.realm.SaltAwareRealm"
-        p:credentialsMatcher-ref="customMatcher"/>
+    <bean id="jdbcRealm" class="com.bityet.realm.SaltAwareRealm" p:credentialsMatcher-ref="credentialsMatcher"/>
 
     <bean id="customMatcher" class="com.bityet.realm.CustomCredentialsMatcher"/>
+
+    <bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher" p:hashAlgorithmName="MD5"/>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="jdbcRealm"/>
